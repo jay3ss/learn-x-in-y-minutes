@@ -1,12 +1,13 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
+#include <stdio.h>
+
+#include <string.h>
 
 int main(int argc, char** argv) {
     // print output using printf, for "print formatted"
     // %d is an integer, \n is a newline
-    printf("%d\n", 0);  // => prints 0
+    printf("%d\n", 0); // => prints 0
 
     // take input using scanf
     // '&' is used to define the (memory) location
@@ -36,17 +37,17 @@ int main(int argc, char** argv) {
     // chars defined as the smallest addressable unit for a processor
     // this is usually 1 byte, but for some systems it can be more
     char x_char = 0;
-    char y_char = 'y';  // char literals are quoted with ''
+    char y_char = 'y'; // char literals are quoted with ''
 
     // longs are often 4 to 8 bytes; long longs are guaranteed to be at least 8 bytes
     long x_long = 0;
     long long x_long_long = 0;
 
     // floats are usually 32-bit floating-point numbers
-    float x_float = 0.0f;   // 'f' suffix here denotes floating point literal
+    float x_float = 0.0f; // 'f' suffix here denotes floating point literal
 
     // doubles are usually 64-bit floating-point numbers
-    double x_double = 0.0;  // real numbers without any suffixes are doubles
+    double x_double = 0.0; // real numbers without any suffixes are doubles
 
     // integer types may be unsigned (greater than or equal to zero)
     unsigned short ux_short;
@@ -54,36 +55,43 @@ int main(int argc, char** argv) {
     unsigned long long ux_long_long;
 
     // chars inside single quotes are integers in machine's character set
-    '0';    // => 48 in the ASCII character set
-    'A';    // => 65 in the ASCII character set
+    '0'; // => 48 in the ASCII character set
+    'A'; // => 65 in the ASCII character set
 
     // sizeof(T) gives you the size of a variable with type T in bytes
     // sizeof(obj) gives you the size of the expression (variable, literal, etc.)
-    printf("the size of an int is %zu bytes\n", sizeof(int));    // => 4 (on most machines with 4-byte words)
+    printf("the size of an int is %zu bytes\n", sizeof(int)); // => 4 (on most machines with 4-byte words)
 
     // if the argument of the `sizeof` operator is an expression, then its argument is not
     // evaluated (except VLAs (see below))
     // the value it yields in this case is a compile-time constant
     int a = 1;
     // size_t is an unsigned integer type of at least 2 bytes used to represent the size of an object
-    size_t size = sizeof(a++);  // a++ is not evaluated
+    size_t size = sizeof(a++); // a++ is not evaluated
     printf("sizeof(a++) = %zu where a = %d\n", size, a);
     // prints "sizeof(a++) = 4 where a = 1" (on a 32-bit architecture)\
 
     // arrays must be initialized with a concarete size
     char my_char_array[20]; // this array occupies 1 * 20 = 20 bytes
-    int my_int_array[20];   // this array occupies 4 * 20 = 80 bytes
+    int my_int_array[20]; // this array occupies 4 * 20 = 80 bytes
 
     // you can initialize an array of twenty ints that all equal 0 thusly:
-    int my_array[20] = {0};
+    int my_array[20] = {
+        0
+    };
     // where the "{0}" part is called an "array initializer"
     // all elements (if any) past the ones in the initializer are initialized to 0:
-    int my_other_array[5] = {1, 2};
+    int my_other_array[5] = {
+        1,
+        2
+    };
     // so now my_other_array now has five elements, all but the first two of which are 0:
     // [1, 2, 0, 0, 0]
     // NOTE: you get away without explicity declaring the size of the array  IF you initialize the
     // array on the same line
-    int my_little_array[] = {0};
+    int my_little_array[] = {
+        0
+    };
     // NOTE: when not declaring the size, the size of the array is the number of elements in the
     // initializer. With "{0}", my_little_array is now of size one: [0]
     // to evaluate the size of the array at run-time, divide its byte size by the byte size of
@@ -99,7 +107,7 @@ int main(int argc, char** argv) {
 
     // arrays are mutable; it's just memory!
     my_array[1] = 2;
-    printf("%d\n", my_array[1]);    // => 2
+    printf("%d\n", my_array[1]); // => 2
 
     // in C99 (and as an optional feature in C11), variable-length arrays (VLAs) can be declared
     // as well. the size of such an array need not be a compile time constant
@@ -116,15 +124,15 @@ int main(int argc, char** argv) {
     // strings are just arrays of chars terminated by a NULL (0x00) byte, represented in
     // strings as the special character '\0'. (we don't have to include the NULL by in
     // string literals; the compiler inserts it at the end of the array for us)
-    char a_string [20] = "This is a string";
+    char a_string[20] = "This is a string";
     printf("%s\n", a_string);
 
-    printf("%d\n", a_string[16]);   // => 0
+    printf("%d\n", a_string[16]); // => 0
     // i.e., byte #17 is 0 (as are 18, 19, and 20)
 
     // if we have characters between signle quotes, that's a character literal.
     // it's of type `int` and *not* `char` (for historical reasons)
-    int cha = 'a';  // fine
+    int cha = 'a'; // fine
     char chb = 'a'; // fine too (implicit conversion from int to char)
 
     // multi-dimensional arrays:
@@ -133,7 +141,7 @@ int main(int argc, char** argv) {
         {6, 7, 8, 9, 0}
     };
     // access elements
-    int array_int = multi_array[0][2];  // => 3
+    int array_int = multi_array[0][2]; // => 3
 
     ///////////////////////////////////////
     // Operators
@@ -148,16 +156,16 @@ int main(int argc, char** argv) {
 
     // arithmetic straightforward
     printf("i1 = %d, i2 = %d\n", i1, i2);
-    printf("i1 + i2 = %d\n", i1 + i2);  // => 3
-    printf("i1 - i2 = %d\n", i1 - i2);  // => -1
-    printf("i1 * i2 = %d\n", i1 * i2);  // => 2
-    printf("i1 / i2 = %d\n", i1 / i2);  // => 0 (0.5, but truncated towards 0)
+    printf("i1 + i2 = %d\n", i1 + i2); // => 3
+    printf("i1 - i2 = %d\n", i1 - i2); // => -1
+    printf("i1 * i2 = %d\n", i1 * i2); // => 2
+    printf("i1 / i2 = %d\n", i1 / i2); // => 0 (0.5, but truncated towards 0)
 
     // you need to cast at least one integer to float to get a floating-point result
-    printf("(float)i1 / i2 = %f\n", (float)i1 / i2);    // => 0.5f
-    printf("i1 / (double)i2 = %f\n", i1 / (double)i2);  // => 0.5f
+    printf("(float)i1 / i2 = %f\n", (float)i1 / i2); // => 0.5f
+    printf("i1 / (double)i2 = %f\n", i1 / (double)i2); // => 0.5f
     printf("f1 = %f, f2 = %f\n", f1, f2);
-    printf("f1 / f2 = %f\n", f1 / f2);  // => 0.5, plus or minus epsilon
+    printf("f1 / f2 = %f\n", f1 / f2); // => 0.5, plus or minus epsilon
 
     // floating-point numbers are defined by IEEE 754, thus cannot store perfectly exact
     // values. For instance, the following does not produce expected results because
@@ -176,7 +184,7 @@ int main(int argc, char** argv) {
     // to be considered
 
     // modulo is there as well, but be careful if arguments are negative
-    printf("11 %% 3 = %d\n", 11 % 3);   // => 2 as 11 = 2 + 3*x (x=3)
+    printf("11 %% 3 = %d\n", 11 % 3); // => 2 as 11 = 2 + 3*x (x=3)
     printf("(-11) %% 3 = %d\n", (-11) % 3); // => -2, as one would expect
     printf("11 %% (-3) = %d\n", 11 % (-3)); // => 2 and not -2, and it's quite conterintuitive
 
@@ -189,6 +197,107 @@ int main(int argc, char** argv) {
     printf("3 < 2 = %s\n", 3 < 2 ? "true" : "false");
     printf("3 <= 2 = %s\n", 3 <= 2 ? "true" : "false");
     printf("3 >= 2 = %s\n", 3 >= 2 ? "true" : "false");
+
+    // C is not Python - comparisons do NOT chain
+    // WARNING: the line below will compile, but it means `(0 < a) < 2`
+    // This expressions is always true because (0 < a) could be either 1 or 0
+    // In this case it's 1, because (0 < 1)
+    int between_0_and_2 = 0 < a < 2;
+    printf("0 < a < 2 => %s\n", between_0_and_2 ? "true" : "false");
+    // Instead use:
+    between_0_and_2 = 0 < a && a < 2;
+    printf("0 < a && a < 2 => %s\n", between_0_and_2 ? "true" : "false");
+
+    // Logic works on ints
+    printf("!3 => %d\n", !3);
+    printf("!0 => %d\n", !0);
+    printf("1 && 1 => %d\n", 1 && 1);
+    printf("0 && 1 => %d\n", 0 && 1);
+    printf("0 || 1 => %d\n", 0 || 1);
+    printf("0 || 0 => %d\n", 0 || 0);
+
+    // Conditional ternary expression ( ? : )
+    int e = 5;
+    int f = 10;
+    int z = (e > f) ? e : f;
+    printf("e = %d, f = %d\n", e, f);
+    printf("z = (e > f) ? e : f => %d\n", z); // => 10 "if e > f return e, else return f."
+
+    // Increment and decrement operators:
+    int j = 0;
+    int s = j++; // Return j THEN increase j. (s = 0, j = 1)
+    s = ++j; // Increase j THEN return j. (s = 2, j = 2)
+    // same with j-- and --j
+    printf("j = %d, s = %d\n", j, s);
+    printf("s = j++ => %d\n", s);
+
+    // Bitwise operators!
+    ~0x0F; // => 0xFFFFFFF0 (bitwise negation, "1's complement", example result for 32-bit int)
+    0x0F & 0xF0; // => 0x00 (bitwise AND)
+    0x0F | 0xF0; // => 0xFF (bitwise OR)
+    0x04 ^ 0x0F; // => 0x0B (bitwise XOR)
+    0x01 << 1; // => 0x02 (bitwise left shift (by 1))
+    0x02 >> 1; // => 0x01 (bitwise right shift (by 1))
+    printf("~0xF0 => %#08X\n", ~0x0F);
+    printf("0x0F & 0xF0 => %#08X\n", 0x0F & 0xF0);
+    printf("0x0F | 0xF0 => %#08X\n", 0x0F | 0xF0);
+    printf("0x04 ^ 0x0F => %#08X\n", 0x04 ^ 0x0F);
+    printf("0x01 << 1 => %#08X\n", 0x01 << 1);
+    printf("0x02 >> 1 => %#08X\n", 0x02 >> 1);
+
+    // Be careful when shifting signed integers - the following are undefined:
+    // - shifting into the sign bit of a signed integer (int a = 1 << 31)
+    // - left-shifting a negative number (int a = -1 << 2)
+    // - shifting by an offset which is >= the width of the type of the LHS:
+    //   int a = 1 << 32; // UB if int is 32 bits wide
+
+    ///////////////////////////////////////
+    // Control Structures
+    ///////////////////////////////////////
+
+    if (0) {
+        printf("I am never run\n");
+    }
+    else if (0) {
+        printf("I am also never run\n");
+    }
+    else {
+        printf("I print\n");
+    }
+
+    // While loops exist
+    int ii = 0;
+    while (ii < 10) { // ANY value less than ten is true.
+        printf("%d, ", ii++); // ii++ increments ii AFTER using its current value.
+    } // => prints "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "
+
+    printf("\n");
+
+    int kk = 0;
+    do {
+        printf("%d, ", kk);
+    } while (++kk < 10); // ++kk increments kk BEFORE using its current value.
+    // => prints "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "
+
+    printf("\n");
+
+    // For loops too
+    int jj;
+    for (jj = 0; jj < 10; jj++) {
+        printf("%d, ", jj);
+    } // => prints "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "
+
+    printf("\n");
+
+    // *****NOTES*****:
+    // Loops and Functions MUST have a body. If no body is needed:
+    int i;
+    for (i = 0; i <= 5; i++) {
+        ; // use semicolon to act as the body (null statement)
+    }
+    // Or
+    for (i = 0; i <= 5; i++)
+        ;
 
     return 0;
 }
