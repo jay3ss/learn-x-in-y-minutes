@@ -296,8 +296,7 @@ int main(int argc, char** argv) {
         ; // use semicolon to act as the body (null statement)
     }
     // Or
-    for (i = 0; i <= 5; i++)
-        ;
+    for (i = 0; i <= 5; i++);
 
     return 0;
 }
