@@ -298,5 +298,45 @@ int main(int argc, char** argv) {
     // Or
     for (i = 0; i <= 5; i++);
 
+    // branching with multiple choices: switch()
+    switch (a) {
+    case 0: // labels need to be integral *constant* expressions (such as enums)
+        printf("Hey, 'a' equals 0!\n");
+        break; // if you don't break, control flow falls over labels
+    case 1:
+        printf("Huh, 'a' equals 1!\n");
+        break;
+        // Be careful - without a "break", execution continues until the
+        // next "break" is reached.
+    case 3:
+    case 4:
+        printf("Look at that.. 'a' is either 3, or 4\n");
+        break;
+    default:
+        // if `some_integral_expression` didn't match any of the labels
+        fputs("Error!\n", stderr);
+        exit(-1);
+        break;
+    }
+
+    // Using "goto" in C
+    // typedef enum { false, true } bool;
+    typedef enum { false, true } bool;
+    // C before C99 doesn't have bool as a data type
+    bool disaster = false;
+    // int i, j;
+    for (i = 0; i < 100; ++i) {
+        for (j = 0; j < 100; ++j) {
+            if ((i + j) >= 150) {
+                disaster = true;
+            }
+            if (disaster) goto error;
+        }
+    }
+
+error: // this is a label that you can "jump" to with "goto error;"
+    printf("Error occurred at i = %d & j = %d\n", i, j);
+
+
     return 0;
 }
