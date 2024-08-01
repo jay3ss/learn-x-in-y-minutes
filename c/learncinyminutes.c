@@ -337,6 +337,90 @@ int main(int argc, char** argv) {
 error: // this is a label that you can "jump" to with "goto error;"
     printf("Error occurred at i = %d & j = %d\n", i, j);
 
+    // https://ideone.com/GuPhd6
+    // this will print out "Error occurred at i = 51 & j = 99."
+
+    // it is generally considered bad practice to do so, except if
+    // you really know what you are doing. See
+    // https://en.wikipedia.org/wiki/Spaghetti_code#Meaning
+
+
+    ///////////////////////////////////////
+    // Typecasting
+    ///////////////////////////////////////
+
+    // Every value in C has a type, but you can cast one value into another type
+    // if you want (with some constraints).
+
+    int x_hex = 0x01; // You can assign vars with hex literals
+    // binary is not in the standard, but allowed by some
+    // compilers (x_bin = 0b0010010110)
+
+    // Casting between types will attempt to preserve their numeric values
+    printf("%d\n", x_hex); // => Prints 1
+    printf("%d\n", (short)x_hex); // => Prints 1
+    printf("%d\n", (char)x_hex); // => Prints 1
+
+    // If you assign a value greater than a types max val, it will rollover
+    // without warning.
+    printf("%d\n", (unsigned char)257); // => 1 (Max char = 255 if char is 8 bits long)
+
+    // For determining the max value of a `char`, a `signed char` and an `unsigned char`,
+    // respectively, use the CHAR_MAX, SCHAR_MAX and UCHAR_MAX macros from <limits.h>
+
+    // Integral types can be cast to floating-point types, and vice-versa.
+    printf("%f\n", (double)100); // %f always formats a double...
+    printf("%f\n", (float)100); // ...even with a float.
+    printf("%d\n", (char)100.0);
+
+    ///////////////////////////////////////
+    // Pointers
+    ///////////////////////////////////////
+
+    // a pointer is a variable declared to store a memory address. Its declaration will
+    // also tell you the type of data it points to. You can retrieve the memory address
+    // of your variables, then mess with them
+
+    int x = 0;
+    printf("%p\n", (void*)&x); // use  & to retrieve the address of a variable
+    // (%p formats an object pointer of the type void*)
+    // => prints some address in memory
+
+    // pointers start with * in their declaration
+    int* px, not_a_pointer; // px is a pointer to an int
+    px = &x; // stores the address of x in px
+    printf("%p\n", (void*)px); // => prints some address in memory
+    printf("%zu, %zu\n", sizeof(px), sizeof(not_a_pointer));
+    // => prints "8, 4" on a typical 64-bit system
+
+    // to retrieve the value at the address a pointer is pointing to, put a * in front
+    // to dereference it.
+    // NOTE: yes, it may be confusing that '*' is used for _both_ declaring a pointer
+    // and dereferencing it
+    printf("%d\n", *px);
+
+    // you can also change the value the pointer is pointing to. we'll have to wrap the
+    // dereference in parentheses because ++ has a higher precedence than *
+    (*px)++; // increment the value px is pointing to by 1
+    printf("%d\n", *px); // => prints 1
+    printf("%d\n", x); // => prints 1
+
+    // arrays are a good way to allocate a contiguous block of memory
+    int x_array[20]; // declares array of size 20 (cannot change size)
+    int xx;
+    for (xx = 0; xx < 20; xx++) {
+        x_array[xx] = 20 - xx;
+    } // initialize x_array to 20, 19, 18, ..., 2, 1
+
+    // declare a pointer of type int and initialize it to point to x_array
+    int* x_ptr = x_array;
+    // x_ptr now points to the first element in array (the integer 20). this works because
+    // arrays often decay into pointers to their first element. for example, when an array
+    // is passed to a function or is assigned to a pointer, it decays into (implicityly
+    // converted to) a pointer.
+    // EXCEPTIONS: when the array is the argument of the `&` (address-of) operator:
+    int arr[10];
+    int (*ptr_to_arr)[10] = &arr; // &arr is NOT of type `int*`!
 
     return 0;
 }
